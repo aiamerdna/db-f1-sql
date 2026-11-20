@@ -4,45 +4,45 @@ USE db_Formula1;
 
 -- Criação da tabela paises para organizar os países cadastrados
 CREATE TABLE paises (
-    codigo VARCHAR(5) PRIMARY KEY, -- Código identificador do país
-    nome VARCHAR(50) NOT NULL -- Nome do país
+    codigo VARCHAR(5) PRIMARY KEY, 
+    nome VARCHAR(50) NOT NULL 
 );
 
 -- Criação da tabela equipes para armazenar as equipes da Fórmula 1
 CREATE TABLE equipes (
-    sigla VARCHAR(10) PRIMARY KEY, -- Sigla identificadora da equipe
-    nome VARCHAR(50) NOT NULL, -- Nome da equipe
-    cod_pais VARCHAR(5) NOT NULL, -- Código do país de origem da equipe
-    FOREIGN KEY (cod_pais) REFERENCES paises(codigo) -- Relaciona a equipe ao seu país
+    sigla VARCHAR(10) PRIMARY KEY,
+    nome VARCHAR(50) NOT NULL, 
+    cod_pais VARCHAR(5) NOT NULL,
+    FOREIGN KEY (cod_pais) REFERENCES paises(codigo)
 );
 
 -- Criação da tabela pilotos para guardar os dados dos pilotos
 CREATE TABLE pilotos (
-    numero INTEGER PRIMARY KEY, -- Número identificador do piloto
-    nome VARCHAR(100) NOT NULL, -- Nome completo do piloto
-    cod_pais VARCHAR(5) NOT NULL, -- Código do país de nacionalidade do piloto
-    sigla_equipe VARCHAR(10) NOT NULL, -- Sigla da equipe à qual o piloto pertence
-    FOREIGN KEY (cod_pais) REFERENCES paises(codigo), -- Relaciona o piloto ao seu país
-    FOREIGN KEY (sigla_equipe) REFERENCES equipes(sigla) -- Relaciona o piloto à sua equipe
+    numero INTEGER PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    cod_pais VARCHAR(5) NOT NULL,
+    sigla_equipe VARCHAR(10) NOT NULL,
+    FOREIGN KEY (cod_pais) REFERENCES paises(codigo),
+    FOREIGN KEY (sigla_equipe) REFERENCES equipes(sigla)
 );
 
 -- Criação da tabela corridas para registrar os Grandes Prêmios
 CREATE TABLE corridas (
-    sigla_gp VARCHAR(10) PRIMARY KEY, -- Sigla identificadora do Grande Prêmio
-    nome_gp VARCHAR(100) NOT NULL, -- Nome completo da corrida
-    cod_pais VARCHAR(5) NOT NULL, -- Código do país onde a corrida acontece
-    voltas INTEGER NOT NULL, -- Quantidade de voltas da corrida
-    FOREIGN KEY (cod_pais) REFERENCES paises(codigo) -- Relaciona a corrida ao país onde acontece
+    sigla_gp VARCHAR(10) PRIMARY KEY,
+    nome_gp VARCHAR(100) NOT NULL,
+    cod_pais VARCHAR(5) NOT NULL,
+    voltas INTEGER NOT NULL,
+    FOREIGN KEY (cod_pais) REFERENCES paises(codigo)
 );
 
 -- Criação da tabela associativa participantes para relacionar pilotos e corridas
 CREATE TABLE participantes (
-    sigla_gp VARCHAR(10), -- Sigla do Grande Prêmio
-    num_piloto INTEGER, -- Número identificador do piloto
-    posicao_larg INTEGER NOT NULL, -- Posição em que o piloto iniciou a corrida
-    PRIMARY KEY (sigla_gp, num_piloto), -- Define uma chave primária composta pelos dois campos
-    FOREIGN KEY (sigla_gp) REFERENCES corridas(sigla_gp), -- Relaciona o participante à corrida
-    FOREIGN KEY (num_piloto) REFERENCES pilotos(numero) -- Relaciona o participante ao piloto
+    sigla_gp VARCHAR(10),
+    num_piloto INTEGER,
+    posicao_larg INTEGER NOT NULL,
+    PRIMARY KEY (sigla_gp, num_piloto),
+    FOREIGN KEY (sigla_gp) REFERENCES corridas(sigla_gp),
+    FOREIGN KEY (num_piloto) REFERENCES pilotos(numero)
 );
 
 -- Inserção dos países e seus respectivos códigos
